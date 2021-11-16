@@ -53,7 +53,8 @@ export default {
           database: true,
           storage: true
         }
-      }
+      },
+      '@nuxtjs/axios'
     ]
   ],
 

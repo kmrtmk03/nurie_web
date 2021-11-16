@@ -56,7 +56,11 @@
 
       onGetImg() {
         this.$fire.storage.ref().child('images/' + this.myKey + '.png').getDownloadURL().then((url) => {
-          this.imgSrc = url
+          // this.imgSrc = url
+
+          this.$store.dispatch('setImgurl', url)
+
+          console.log(this.$store.getters['imgurl'])
         })
       },
 
@@ -71,10 +75,15 @@
 <style lang="scss" scoped>
 
   .getData {
-    background-color: rgba(0, 0, 0, 0.4);
+    opacity: 0.1;
+
+    background-color: rgba(0, 0, 0, 1);
     width: 100%;
     height: 100vh;
     overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
   }
 
   h1 {
