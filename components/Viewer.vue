@@ -64,8 +64,23 @@
     methods: {
       createFish() {
 
-        const tex = new THREE.TextureLoader().load(this.$store.getters['imgurl'])
-        console.log(tex)
+        this.$axios.$get(
+          '/api/' + 'v0/b/nurie-75640.appspot.com/o/images%2F211116101045.png?alt=media&amp;token=fc6fd830-942e-4d62-a28a-62271cf5c268'
+        ).then(res => {
+          console.log(res)
+
+          const tex = new THREE.TextureLoader()
+          tex.crossOrigin = '*'
+
+          tex.load(res, texture => {
+            console.log(tex)
+          })
+        })
+
+        // this.$fire.storage.ref().child('images/' + '211116101045' + '.png').getDownloadURL().then((url) => {
+        //   this.imgSrc = url
+        // })
+
 
         //GLTF読み込み
         const gltfLoader = new GLTFLoader()

@@ -1,7 +1,7 @@
 <template lang="pug">
   .getData
     .head
-      h1(v-show="isDev") Firebase接続の確認
+      h1(v-show="isDev") Keyの入力
 
     .input
       p IDを入力してください
@@ -15,6 +15,7 @@
 
       .img
         img(:src="imgSrc")
+
 </template>
 
 
@@ -37,6 +38,15 @@
     },
 
     methods: {
+      testAxios() {
+        this.$axios.$get(
+          "https://firebasestorage.googleapis.com/v0/b/nurie-75640.appspot.com/o/images"
+        )
+        .then(res => {
+          console.log(res)
+        })
+      },
+
       onGetInfo() {
         this.$fire.database.ref('users/' + this.myKey).once("value").then(snapshot => {
 
@@ -56,11 +66,9 @@
 
       onGetImg() {
         this.$fire.storage.ref().child('images/' + this.myKey + '.png').getDownloadURL().then((url) => {
-          // this.imgSrc = url
+          this.imgSrc = url
 
           this.$store.dispatch('setImgurl', url)
-
-          console.log(this.$store.getters['imgurl'])
         })
       },
 
@@ -75,28 +83,30 @@
 <style lang="scss" scoped>
 
   .getData {
-    opacity: 0.1;
+    opacity: 0.8;
 
-    background-color: rgba(0, 0, 0, 1);
+    background-color: #fff;
     width: 100%;
     height: 100vh;
     overflow: hidden;
     position: fixed;
     top: 0;
     left: 0;
+    padding: 0 5vw;
   }
 
   h1 {
     text-align: center;
-    padding: 30px 0;
+    padding: 20px 0;
+    font-size: 5vw;
   }
 
   .input {
-    width: 640px;
-    margin: 80px auto 0;
+    width: 100%;
+    margin: 50px auto 0;
 
     p {
-      font-size: 1.8rem;
+      font-size: 4vw;
     }
 
     input {
@@ -108,9 +118,11 @@
     }
 
     button {
+      display: block;
+      width: 100%;
+      padding: 10px 0;
       $_bgColor: #ccc;
       display: block;
-      padding: 15px 140px;
       margin: 30px auto 0;
       background-color: $_bgColor;
       border: 1px solid $_bgColor;
@@ -124,12 +136,12 @@
   }
 
   .data {
-    width: 600px;
+    width: 100%;
     margin: 60px auto 0;
 
     ul {
       li {
-        font-size: 2rem;
+        font-size: 4vw;
         margin-top: 10px;
         &:first-child {
           margin-top: 0;
@@ -139,8 +151,8 @@
 
     img {
       display: block;
-      margin-top: 10px;
-      width: 300px;
+      margin-top: 15px;
+      width: 100%;
     }
   }
 </style>

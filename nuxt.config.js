@@ -51,12 +51,24 @@ export default {
         },
         services: {
           database: true,
-          storage: true
+          storage: true,
         }
-      },
-      '@nuxtjs/axios'
-    ]
+      }
+    ],
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
   ],
+
+  axios: {
+    proxy: true,
+  },
+
+  proxy: {
+     '/api/': {
+      target: 'https://firebasestorage.googleapis.com',
+      pathRewrite: {'^/api/': '/'}
+    }
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
